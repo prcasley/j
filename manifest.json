@@ -1,0 +1,10 @@
+{
+  "name": "Shadow Monarch OS",
+  "short_name": "SM OS",
+  "description": "Solo Leveling Life Operating System",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050810",
+  "theme_color": "#9333ea",
+  "icons": []
+}
