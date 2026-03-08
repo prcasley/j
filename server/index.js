@@ -1,10 +1,17 @@
 import "dotenv/config";
 import express from "express";
+import { mkdirSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import { Client, GatewayIntentBits, AttachmentBuilder } from "discord.js";
 import { processWorkoutImage } from "./vision.js";
 import { updateExcel, getStats } from "./excel.js";
 import { updateDashboardData, getDashboardSummary } from "./dashboard.js";
 import { formatReply } from "./reply.js";
+
+// Ensure data directory exists (Railway has ephemeral filesystem)
+const __dirname = dirname(fileURLToPath(import.meta.url));
+mkdirSync(resolve(__dirname, "../data"), { recursive: true });
 
 const app = express();
 const PORT = process.env.PORT || 3777;

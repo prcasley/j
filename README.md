@@ -74,6 +74,20 @@ npm run dev
 - `!stats` → View your day/week/month/year stats and remaining workouts
 - `!help` → Show available commands
 
+### Deploy to Railway (Free, runs 24/7)
+
+1. Push this repo to GitHub (private repo is fine)
+2. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub Repo**
+3. Select this repo
+4. Railway auto-detects the config from `nixpacks.toml`
+5. Go to your service → **Variables** tab → Add these env vars:
+   - `DISCORD_TOKEN` — your Discord bot token
+   - `DISCORD_CHANNEL_ID` — the channel ID
+   - `ANTHROPIC_API_KEY` — your Anthropic API key
+6. Click **Deploy** — done. Bot runs 24/7
+
+**Note:** Railway's filesystem resets on each deploy, so workout data (Excel + JSON) resets too. The data dir is auto-created on startup. For persistent storage, you can add a Railway Volume (Settings → Volumes → mount to `/app/data`).
+
 ## Tech
 
 - React 18 + Vite
