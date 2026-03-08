@@ -2,3 +2,6 @@ node_modules
 dist
 .DS_Store
 *.local
+server/.env
+data/workout_log.xlsx
+data/dashboard.json
