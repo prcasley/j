@@ -1,0 +1,20 @@
+{
+  "name": "shadow-monarch-webhook",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Discord bot + webhook server for Shadow Monarch OS workout tracking",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.18.3"
+  }
+}

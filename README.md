@@ -40,9 +40,61 @@ Or use GitHub Pages with `npm run build` and serve the `dist/` folder.
 
 After deploying, open the URL in Safari/Chrome → Share → Add to Home Screen. It runs as a standalone app (PWA).
 
+## Discord Workout Bot (Webhook Server)
+
+Send a photo of your workout to Discord and the bot will:
+1. **Read the image** using Claude Vision API (OCR)
+2. **Extract** exercises, sets, reps, and weights
+3. **Update an Excel spreadsheet** (`data/workout_log.xlsx`) with Solo Leveling styling
+4. **Update the dashboard** data store (`data/dashboard.json`)
+5. **Reply** with a congrats message, workout breakdown, and stats for day/week/month/year
+
+### Bot Setup
+
+```bash
+cd server
+cp .env.example .env
+# Fill in your Discord bot token, channel ID, and Anthropic API key
+npm install
+npm run dev
+```
+
+### Discord Bot Setup
+
+1. Go to [discord.com/developers/applications](https://discord.com/developers/applications)
+2. Create a new application → Bot tab → Copy token → paste in `.env`
+3. Enable **Message Content Intent** under Bot → Privileged Intents
+4. Go to OAuth2 → URL Generator → select `bot` scope → select permissions: `Send Messages`, `Attach Files`, `Read Message History`
+5. Open the generated URL to invite the bot to your server
+6. Right-click the channel you want to use → Copy ID → paste in `.env`
+
+### Bot Commands
+
+- **Send a workout photo** → Bot extracts data, updates Excel + dashboard, replies with summary
+- `!stats` → View your day/week/month/year stats and remaining workouts
+- `!help` → Show available commands
+
+### Deploy to Railway (Free, runs 24/7)
+
+1. Push this repo to GitHub (private repo is fine)
+2. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub Repo**
+3. Select this repo
+4. Railway auto-detects the config from `nixpacks.toml`
+5. Go to your service → **Variables** tab → Add these env vars:
+   - `DISCORD_TOKEN` — your Discord bot token
+   - `DISCORD_CHANNEL_ID` — the channel ID
+   - `ANTHROPIC_API_KEY` — your Anthropic API key
+6. Click **Deploy** — done. Bot runs 24/7
+
+**Note:** Railway's filesystem resets on each deploy, so workout data (Excel + JSON) resets too. The data dir is auto-created on startup. For persistent storage, you can add a Railway Volume (Settings → Volumes → mount to `/app/data`).
+
 ## Tech
 
 - React 18 + Vite
 - localStorage for data persistence
 - Pure CSS animations (no dependencies)
 - Embedded base64 avatar image
+- **Discord.js** bot for workout photo intake
+- **Claude Vision API** for OCR/image extraction
+- **ExcelJS** for styled workout spreadsheets
+- **Express** health check server
